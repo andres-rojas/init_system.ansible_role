@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Andres Rojas
+  description: Base setup for new nodes
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - system
+dependencies:
+  - { role: Stouts.timezone, become: yes }

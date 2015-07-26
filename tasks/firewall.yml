@@ -1,0 +1,24 @@
+---
+- name: Initialize firewall rules
+  template:
+    src: etc/iptables.firewall.rules.j2
+    dest: /etc/iptables.firewall.rules
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+    - reload iptables firewall rules
+
+- name: Ensure firewall rules at startup
+  template:
+    src: etc/network/if-pre-up.d/firewall.j2
+    dest: /etc/network/if-pre-up.d/firewall
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Install fail2ban
+  apt: name=fail2ban
+  become: yes

@@ -1,0 +1,4 @@
+---
+- name: reload iptables firewall rules
+  shell: /sbin/iptables-restore < /etc/iptables.firewall.rules
+  become: yes

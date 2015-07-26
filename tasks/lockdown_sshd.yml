@@ -1,0 +1,36 @@
+---
+- name: Disable SSH password authentication
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: '^[\s#]*PasswordAuthentication\s*yes(?:[\s#]*.*)$'
+    replace: 'PasswordAuthentication no'
+    validate: sshd -tf %s
+  become: true
+
+- name: 'Ensure "PasswordAuthentication no" is set'
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: 'PasswordAuthentication no'
+    validate: sshd -tf %s
+  become: true
+
+- name: Disable SSH root login
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: '^[\s#]*PermitRootLogin\s*yes(?:[\s#]*.*)$'
+    replace: 'PermitRootLogin no'
+    validate: sshd -tf %s
+  become: true
+
+- name: 'Ensure "PermitRootLogin no" is set'
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: 'PermitRootLogin no'
+    validate: sshd -tf %s
+  become: true
+
+- name: Remove /root/.ssh/authorized_keys
+  file:
+    path: /root/.ssh/authorized_keys
+    state: absent
+  become: true
